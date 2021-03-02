@@ -1,0 +1,12 @@
+{
+    "web": {
+        "files": ["index.html", ".gitignore"],
+        "subfolders": {
+            "css": ["style.css"],
+            "assets": {
+                "images": [],
+                "icons": []
+            }
+        }
+    }
+}
