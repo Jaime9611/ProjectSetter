@@ -43,10 +43,3 @@ class WebProject(Project):
         with open('./data/structures.json') as f:
             folders = json.load(f)
         self.FOLDERS = folders['web']
-
-
-if __name__ == '__main__':
-    with open('./data/project_paths.json') as f:
-        MAIN_FOLDER = json.load(f)['webFolder']
-    p = WebProject('TEST', MAIN_FOLDER)
-    p.create_project()
