@@ -3,16 +3,13 @@ from typing import List
 
 
 MAIN_FOLDER = 'C:/Users/JAB/Documents/WEB'
-PROJECTS_FOLDER = 'PROJECTS'
-PRACTICE_FOLDER = 'PRACTICE'
 
 
 class Project:
-    def __init__(self, project_name, folders, add_repo):
+    def __init__(self, project_name, folders):
         self.BASE_DIR = Path(MAIN_FOLDER)
         self.FOLDERS = folders
         self.project_path = self.BASE_DIR / project_name
-        self.add_repo = add_repo
 
     def _create_files(self, parent_path, files):
         for file in files:
@@ -49,8 +46,9 @@ if __name__ == '__main__':
         'files': ['index.html', '.gitignore'],
         "subfolders": {
             "css": ["style.css"],
+            "js": ["main.js"],
             "assets": {"images": [], "icons": []}
         }
     }
-    p = Project('TEST', d, False)
+    p = Project('TEST', d)
     p.create_project()
