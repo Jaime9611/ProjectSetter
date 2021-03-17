@@ -1,14 +1,10 @@
 from pathlib import Path
-from typing import List
-
-
-MAIN_FOLDER = 'C:/Users/JAB/Documents/WEB'
+import json
 
 
 class Project:
-    def __init__(self, project_name, folders):
-        self.BASE_DIR = Path(MAIN_FOLDER)
-        self.FOLDERS = folders
+    def __init__(self, project_name, root):
+        self.BASE_DIR = Path(root)
         self.project_path = self.BASE_DIR / project_name
 
     def _create_files(self, parent_path, files):
@@ -41,14 +37,16 @@ class Project:
                 self._create_subfolders(self.project_path, self.FOLDERS[folder])
 
 
+class WebProject(Project):
+    def __init__(self, project_name, root):
+        super().__init__(project_name, root)
+        with open('./data/structures.json') as f:
+            folders = json.load(f)
+        self.FOLDERS = folders['web']
+
+
 if __name__ == '__main__':
-    d = {
-        'files': ['index.html', '.gitignore'],
-        "subfolders": {
-            "css": ["style.css"],
-            "js": ["main.js"],
-            "assets": {"images": [], "icons": []}
-        }
-    }
-    p = Project('TEST', d)
+    with open('./data/project_paths.json') as f:
+        MAIN_FOLDER = json.load(f)['webFolder']
+    p = WebProject('TEST', MAIN_FOLDER)
     p.create_project()
