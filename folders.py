@@ -49,6 +49,6 @@ class Project:
 class WebProject(Project):
     def __init__(self, project_name, root):
         super().__init__(project_name, root)
-        with open('./data/structures.json') as f:
+        with open('./resources/structures.json') as f:
             folders = json.load(f)
         self.FOLDERS = folders['web']
