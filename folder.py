@@ -6,6 +6,15 @@ class Project:
     def __init__(self, project_name, root):
         self.BASE_DIR = Path(root)
         self.project_path = self.BASE_DIR / project_name
+        self._check_base()
+
+    def _check_base(self):
+        """Verifies if the Main folder exists otherwise it will create it."""
+
+        try:
+            self.BASE_DIR.mkdir()
+        except FileExistsError:
+            pass
 
     def _create_files(self, parent_path, files):
         for file in files:
