@@ -1,7 +1,7 @@
 import json
 
 import click
-import folder
+import folders
 
 
 HELP_P = "Create project in 'PROJECTS' directory."
@@ -32,7 +32,7 @@ def mkweb(project_name, mode):
     if mode != 'MAIN':
         MAIN_FOLDER += f'{mode}/'
 
-    webproject = folder.WebProject(project_name, MAIN_FOLDER)
+    webproject = folders.WebProject(project_name, MAIN_FOLDER)
     webproject.create_project()
     click.echo(f'Project created succesfull in {webproject.project_path}')
 
