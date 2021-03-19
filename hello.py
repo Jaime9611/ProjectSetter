@@ -1,12 +1,12 @@
 import json
 
 import click
-import folder
+import folders
 
 
 HELP_P = "Create project in 'PROJECTS' directory."
 HELP_T = "Create project in 'PRACTICE' directory."
-HELP_R = "Create project in the main directory. This is the default."
+HELP_R = "Create project in the main directory (default)."
 
 
 @click.group()
@@ -30,9 +30,9 @@ def mkweb(project_name, mode):
         MAIN_FOLDER = json.load(f)['webFolder']
 
     if mode != 'MAIN':
-        MAIN_FOLDER += (mode + '/')
+        MAIN_FOLDER += f'{mode}/'
 
-    webproject = folder.WebProject(project_name, MAIN_FOLDER)
+    webproject = folders.WebProject(project_name, MAIN_FOLDER)
     webproject.create_project()
     click.echo(f'Project created succesfull in {webproject.project_path}')
 
