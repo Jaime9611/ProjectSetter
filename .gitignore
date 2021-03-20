@@ -1,2 +1,3 @@
 .vscode/
+__pycache__/
 ProjectSetter.egg-info
