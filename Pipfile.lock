@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "d289e69217c70daaff7c447641371e796b6ce765eb3b2b7453701533250f2c1f"
+            "sha256": "ecb195a3bc30e84afa114c8faeefabf582c00ee195f879264ce0cd62e38adb3a"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -34,7 +34,7 @@
             "index": "pypi",
             "version": "==7.1.2"
         },
-        "projectsetter": {
+        "projectsetter-jab": {
             "editable": true,
             "path": "."
         }

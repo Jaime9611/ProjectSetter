@@ -26,7 +26,3 @@ def start_vscode(route):
 
 def show_dir_path(route):
     subprocess.run(['cd', route, '&&', 'pwd'], shell=True)
-
-
-if __name__ == '__main__':
-    start_git()

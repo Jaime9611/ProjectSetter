@@ -1,1 +1,1 @@
-include ./resources/*.json
+include project_setter/resources/*.json

@@ -1,8 +1,9 @@
 import json
+import pkg_resources
 
 import click
-import folders
-import cli_commands
+from . import folders
+from . import cli_commands
 
 
 HELP_P = "Create project in 'PROJECTS' directory."
@@ -27,7 +28,8 @@ def cli():
 def mkweb(project_name, mode):
     """Command to create a Web Project."""
 
-    with open('./resources/project_paths.json') as f:
+    file_path = pkg_resources.resource_filename('project_setter', 'resources/project_paths.json')
+    with open(file_path) as f:
         MAIN_FOLDER = json.load(f)['webFolder']
 
     if mode != 'MAIN':
@@ -37,10 +39,5 @@ def mkweb(project_name, mode):
     webproject.create_project()
     click.echo(f'Project created succesfull in {webproject.project_path}')
     cli_commands.start_git(webproject.project_path)
-    cli_commands.start_vscode(webproject.project_path)
     cli_commands.show_dir_path(webproject.project_path)
-
-
-
-if __name__ == '__main__':
-    cli()
+    # cli_commands.start_vscode(webproject.project_path)

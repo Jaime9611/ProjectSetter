@@ -1,3 +1,4 @@
+import pkg_resources
 from pathlib import Path
 import json
 
@@ -49,6 +50,7 @@ class Project:
 class WebProject(Project):
     def __init__(self, project_name, root):
         super().__init__(project_name, root)
-        with open('./resources/structures.json') as f:
+        file_path = pkg_resources.resource_filename('project_setter', 'resources/structures.json')
+        with open(file_path) as f:
             folders = json.load(f)
         self.FOLDERS = folders['web']
