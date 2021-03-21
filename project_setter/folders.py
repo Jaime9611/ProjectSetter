@@ -51,3 +51,9 @@ class WebProject(Project):
     def __init__(self, project_name, root):
         super().__init__(project_name, root)
         self.FOLDERS = data.get_project_structure(data.WEB)
+
+
+class PyProject(Project):
+    def __init__(self, project_name, root):
+        super().__init__(project_name, root)
+        self.FOLDERS = data.get_project_structure(data.PYTHON)
