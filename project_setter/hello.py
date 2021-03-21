@@ -41,3 +41,5 @@ def mkweb(project_name, mode):
     cli_commands.start_git(webproject.project_path)
     cli_commands.show_dir_path(webproject.project_path)
     # cli_commands.start_vscode(webproject.project_path)
+
+    click.echo('Project Path copied to clipboard...')
