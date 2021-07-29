@@ -13,7 +13,7 @@
   "python": {
     "files": [
       "MANIFEST.in", "pyproject.toml", "setup.cfg",
-      "setup.py", ".gitignore", "main.py"
-    ]
+      "setup.py", ".gitignore"],
+      "subfolders": {}
   }
 }

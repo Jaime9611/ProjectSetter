@@ -1,6 +1,7 @@
 from pathlib import Path
 
 from . import data
+from . import cli_commands
 
 
 class Project:
@@ -56,4 +57,17 @@ class WebProject(Project):
 class PyProject(Project):
     def __init__(self, project_name, root):
         super().__init__(project_name, root)
+        self.project_name = project_name
         self.FOLDERS = data.get_project_structure(data.PYTHON)
+
+    def create_project(self, pkg):
+        if pkg:
+            pkg_folder = self.project_name.lower()
+            self.FOLDERS['subfolders'][pkg_folder] = [
+                '__init__.py', 'main.py']
+            self.FOLDERS['subfolders']['tests'] = ['test.py']
+        else:
+            self.FOLDERS['files'] += ['main.py', 'test.py']
+
+        return super().create_project()
+

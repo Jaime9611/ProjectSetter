@@ -49,8 +49,9 @@ def mkweb(project_name, mode):
     help=HELP_T)
 @click.option('-o', '--other', 'mode', flag_value='MAIN', 
     default=True, help=HELP_R)
+@click.option('-pkg', '--pkg', is_flag=True, default=False)
 @click.argument('project_name')
-def mkpy(project_name, mode):
+def mkpy(project_name, mode, pkg):
     """Command to create a Python Project."""
 
     MAIN_FOLDER = data.get_base_path(data.PYTHON)
@@ -60,7 +61,7 @@ def mkpy(project_name, mode):
 
     pyproject = folders.PyProject(project_name, MAIN_FOLDER)
 
-    pyproject.create_project()
+    pyproject.create_project(pkg)
     click.echo(f'Project created succesfull in {pyproject.project_path}')
     cli_commands.start_git(pyproject.project_path)
     cli_commands.show_dir_path(pyproject.project_path)
