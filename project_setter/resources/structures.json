@@ -9,5 +9,11 @@
           "icons": []
       }
     }
+  },
+  "python": {
+    "files": [
+      "MANIFEST.in", "pyproject.toml", "setup.cfg",
+      "setup.py", ".gitignore"],
+      "subfolders": {}
   }
 }

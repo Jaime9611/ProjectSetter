@@ -1,4 +1,5 @@
 .vscode/
 __pycache__/
+setup.py
 ProjectSetter_JAB.egg-info/
 ProjectSetter.egg-info
