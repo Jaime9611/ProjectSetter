@@ -1,7 +1,7 @@
 from pathlib import Path
 
 from . import data
-from . import cli_commands
+from .data import Project as project_type
 
 
 class Project:
@@ -51,14 +51,14 @@ class Project:
 class WebProject(Project):
     def __init__(self, project_name, root):
         super().__init__(project_name, root)
-        self.FOLDERS = data.get_project_structure(data.WEB)
+        self.FOLDERS = data.get_project_structure(project_type.WEB)
 
 
 class PyProject(Project):
     def __init__(self, project_name, root):
         super().__init__(project_name, root)
         self.project_name = project_name
-        self.FOLDERS = data.get_project_structure(data.PYTHON)
+        self.FOLDERS = data.get_project_structure(project_type.PYTHON)
 
     def create_project(self, pkg):
         if pkg:
