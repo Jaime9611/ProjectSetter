@@ -21,7 +21,7 @@ def cli():
     help=HELP_P)
 @click.option('-t', '--test', 'mode', flag_value='PRACTICE',
     help=HELP_T)
-@click.option('-o', '--other', 'mode', flag_value='MAIN', 
+@click.option('-m', '--main', 'mode', flag_value='MAIN', 
     help=HELP_R)
 @click.option('-c', '--current', 'mode', flag_value='CURRENT', 
     default=True, help=HELP_C)
