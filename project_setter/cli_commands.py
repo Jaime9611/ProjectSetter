@@ -1,5 +1,6 @@
 import subprocess
 import os
+import platform
 
 
 def start_git(route):
@@ -20,5 +21,8 @@ def show_dir_path(route):
 def get_pwd_path():
     result = subprocess.run(['pwd'], 
         shell=True, capture_output=True).stdout.decode('utf-8')
+
+    if result.startswith('/c/') and platform.system() == 'Windows':
+        result = result.replace('/c/', 'C:/')
 
     return result.strip()
