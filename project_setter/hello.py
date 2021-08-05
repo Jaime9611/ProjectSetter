@@ -6,7 +6,8 @@ from . import data
 
 HELP_P = "Create project in 'PROJECTS' directory."
 HELP_T = "Create project in 'PRACTICE' directory."
-HELP_R = "Create project in the main directory (default)."
+HELP_R = "Create project in the main directory."
+HELP_C = "Create project in the current directory (default)."
 
 
 @click.group()
@@ -21,7 +22,9 @@ def cli():
 @click.option('-t', '--test', 'mode', flag_value='PRACTICE',
     help=HELP_T)
 @click.option('-o', '--other', 'mode', flag_value='MAIN', 
-    default=True, help=HELP_R)
+    help=HELP_R)
+@click.option('-c', '--current', 'mode', flag_value='CURRENT', 
+    default=True, help=HELP_C)
 @click.argument('project_name')
 def mkweb(project_name, mode):
     """Command to create a Web Project."""
