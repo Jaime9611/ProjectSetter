@@ -2,6 +2,7 @@ import click
 from . import folders
 from . import cli_commands
 from . import data
+from .data import Project as project_type
 
 
 HELP_P = "Create project in 'PROJECTS' directory."
@@ -31,7 +32,7 @@ def mkweb(project_name, mode):
     if mode == 'CURRENT':
         MAIN_FOLDER = cli_commands.get_pwd_path()
     else:
-        MAIN_FOLDER = data.get_base_path(data.WEB)
+        MAIN_FOLDER = data.get_base_path(project_type.WEB)
 
         if mode != 'MAIN':
             MAIN_FOLDER += f'{mode}/'
@@ -59,7 +60,7 @@ def mkweb(project_name, mode):
 def mkpy(project_name, mode, pkg):
     """Command to create a Python Project."""
 
-    MAIN_FOLDER = data.get_base_path(data.PYTHON)
+    MAIN_FOLDER = data.get_base_path(project_type.PYTHON)
 
     if mode != 'MAIN':
         MAIN_FOLDER += f'{mode}/'
