@@ -15,3 +15,10 @@ def show_dir_path(route):
         shell=True, capture_output=True).stdout.decode('utf-8')
     command = 'echo | set /p nul=' + result.strip() + '| clip'
     os.system(command)
+
+
+def get_pwd_path():
+    result = subprocess.run(['pwd'], 
+        shell=True, capture_output=True).stdout.decode('utf-8')
+
+    return result.strip()

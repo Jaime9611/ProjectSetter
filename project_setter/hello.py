@@ -28,12 +28,14 @@ def cli():
 @click.argument('project_name')
 def mkweb(project_name, mode):
     """Command to create a Web Project."""
+    if mode == 'CURRENT':
+        MAIN_FOLDER = cli_commands.get_pwd_path()
+    else:
+        MAIN_FOLDER = data.get_base_path(data.WEB)
 
-    MAIN_FOLDER = data.get_base_path(data.WEB)
+        if mode != 'MAIN':
+            MAIN_FOLDER += f'{mode}/'
 
-    if mode != 'MAIN':
-        MAIN_FOLDER += f'{mode}/'
-    
     webproject = folders.WebProject(project_name, MAIN_FOLDER)
 
     webproject.create_project()
