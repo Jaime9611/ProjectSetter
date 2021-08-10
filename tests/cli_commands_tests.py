@@ -21,7 +21,12 @@ class CliTest(unittest.TestCase):
         dir_files = [file.name for file in dir_files]
         print(dir_files)
 
-        self.assertTrue('.git' in dir_files)
+        self.assertIn('.git', dir_files)
+
+    def test_get_pwd(self):
+        pwd = cli_commands.get_pwd_path()
+
+        self.assertRegex(pwd, r'^/|.+/.*$')
 
     @classmethod
     def tearDownClass(cls):
