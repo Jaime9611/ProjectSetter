@@ -37,10 +37,11 @@ class TestFolders:
         assert project_name in created_dirs
 
     def test_web_project_structure_correct(self, tmp_folder):
-        web_project = folders.WebProject("NewWebProject", tmp_folder)
+        project_name = "NewWebProject"
+        web_project = folders.WebProject(project_name, tmp_folder)
         web_project.create_project()
 
-        created = (tmp_folder / "NewWebProject").iterdir()
+        created = (tmp_folder / project_name).iterdir()
         created = [file.name for file in created]
         LOGGER.debug(created)
 
