@@ -1,10 +1,12 @@
 import logging
+from project_setter.data import Project
 
 import pytest
 
 from .context import folders
 
 LOGGER = logging.getLogger(__name__)
+
 
 class TestFolders:
     @pytest.fixture(scope="class")
@@ -23,12 +25,26 @@ class TestFolders:
         assert received.BASE_DIR == tmp_folder
 
     def test_web_project_creation(self, tmp_folder):
-        created = folders.WebProject("NewProject", tmp_folder)
-        created.create_project()
+        project_name = "NewWebProject"
 
-        dir_files = tmp_folder.iterdir()
-        dir_files = [file.name for file in dir_files]
-        LOGGER.debug(dir_files)
+        web_project = folders.WebProject(project_name, tmp_folder)
+        web_project.create_project()
 
-        assert "NewProjec" in dir_files
+        created_dirs = tmp_folder.iterdir()
+        created_dirs = [file.name for file in created_dirs]
+        LOGGER.debug(created_dirs)
+
+        assert project_name in created_dirs
+
+    def test_web_project_structure_correct(self, tmp_folder):
+        web_project = folders.WebProject("NewWebProject", tmp_folder)
+        web_project.create_project()
+
+        created = (tmp_folder / "NewWebProject").iterdir()
+        created = [file.name for file in created]
+        LOGGER.debug(created)
+
+        expected = ['.gitignore', 'index.html', 'css', 'js', 'assets']
+
+        assert created.sort() == expected.sort()
 
