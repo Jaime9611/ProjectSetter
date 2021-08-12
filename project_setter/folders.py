@@ -7,8 +7,8 @@ from .data import Project as project_type
 class Project:
     def __init__(self, project_name, root):
         self.BASE_DIR = Path(root)
-        self.project_path = self.BASE_DIR / project_name
         self._check_base()
+        self.project_path = self.BASE_DIR / project_name
 
     def _check_base(self):
         """Verifies if the Main folder exists otherwise it will create it."""
