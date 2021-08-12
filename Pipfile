@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 click = "*"
 pytest = "*"
+projectsetter-jab = {editable = true, path = "."}
 
 [dev-packages]
 projectsetter-jab = {editable = true, path = "."}

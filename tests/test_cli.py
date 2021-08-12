@@ -2,7 +2,6 @@ import unittest
 import subprocess
 from pathlib import Path
 
-
 from .context import cli_commands
 
 class CliTest(unittest.TestCase):
