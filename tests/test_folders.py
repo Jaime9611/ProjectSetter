@@ -57,12 +57,15 @@ class TestFolders:
         created = []
         for item in (tmp_folder / project_name).iterdir():
             if item.is_dir():
-                created += [f.name for f in item.iterdir()]
+                child_list = [
+                    f'{f.parent.name}/{f.name}' for f in item.iterdir()
+                    ]
+                created += child_list
             else:
                 created.append(item.name)
         LOGGER.debug(created)
 
-        expected = ['.gitignore', 'icons', 'images', 'index.html', 'main.js', 'style.css']
+        expected = ['.gitignore', 'assets/icons', 'assets/images', 'index.html', 'js/main.js', 'css/style.css']
 
         assert sorted(created) == sorted(expected)
 
