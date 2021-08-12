@@ -25,7 +25,7 @@ class TestFolders:
         assert received.BASE_DIR == tmp_folder
 
     def test_web_project_creation(self, tmp_folder):
-        project_name = "NewWebProject"
+        project_name = "WebTest1"
 
         web_project = folders.WebProject(project_name, tmp_folder)
         web_project.create_project()
@@ -36,8 +36,8 @@ class TestFolders:
 
         assert project_name in created_dirs
 
-    def test_web_project_structure_correct(self, tmp_folder):
-        project_name = "NewWebProject"
+    def test_web_project_main_structure_correct(self, tmp_folder):
+        project_name = "WebTest2"
         web_project = folders.WebProject(project_name, tmp_folder)
         web_project.create_project()
 
@@ -47,5 +47,22 @@ class TestFolders:
 
         expected = ['.gitignore', 'index.html', 'css', 'js', 'assets']
 
-        assert created.sort() == expected.sort()
+        assert sorted(created) == sorted(expected)
+
+    def test_web_project_files_correct(self, tmp_folder):
+        project_name = "WebTest3"
+        web_project = folders.WebProject(project_name, tmp_folder)
+        web_project.create_project()
+
+        created = []
+        for item in (tmp_folder / project_name).iterdir():
+            if item.is_dir():
+                created += [f.name for f in item.iterdir()]
+            else:
+                created.append(item.name)
+        LOGGER.debug(created)
+
+        expected = ['.gitignore', 'icons', 'images', 'index.html', 'main.js', 'style.css']
+
+        assert sorted(created) == sorted(expected)
 
