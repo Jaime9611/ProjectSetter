@@ -20,9 +20,9 @@ class TestFolders:
         tmp_folder.exists()
 
     def test_project_creation(self, tmp_folder):
-        received = folders.Project('NewProject', tmp_folder)
+        created = folders.Project('NewProject', tmp_folder)
 
-        assert received.BASE_DIR == tmp_folder
+        assert created.BASE_DIR == tmp_folder
 
     def test_web_project_creation(self, tmp_folder):
         project_name = "WebTest1"
@@ -66,6 +66,48 @@ class TestFolders:
         LOGGER.debug(created)
 
         expected = ['.gitignore', 'assets/icons', 'assets/images', 'index.html', 'js/main.js', 'css/style.css']
+
+        assert sorted(created) == sorted(expected)
+
+    def test_python_simple_project_correct(self, tmp_folder):
+        project_name = "PythonTest1"
+        py_project = folders.PyProject(project_name, tmp_folder)
+        py_project.create_project(pkg=False)
+
+        created = (tmp_folder / project_name).iterdir()
+        created = [file.name for file in created]
+        LOGGER.debug(created)
+
+        expected = [
+            "MANIFEST.in", "pyproject.toml", "setup.cfg",
+            "setup.py", ".gitignore", "main.py", "test.py",
+        ]
+
+        assert sorted(created) == sorted(expected)
+
+    def test_python_pkg_project_correct(self, tmp_folder):
+        project_name = "PythonTest3"
+        py_project = folders.PyProject(project_name, tmp_folder)
+        py_project.create_project(pkg=True)
+
+        created = []
+        for item in (tmp_folder / project_name).iterdir():
+            if item.is_dir():
+                child_list = [
+                    f'{f.parent.name}/{f.name}' for f in item.iterdir()
+                    ]
+                created += child_list
+            else:
+                created.append(item.name)
+        LOGGER.debug(created)
+
+        expected = [
+            "MANIFEST.in", "pyproject.toml", "setup.cfg",
+            "setup.py", ".gitignore",
+            f"{project_name.lower()}/main.py",
+            f"{project_name.lower()}/__init__.py",
+            "tests/test.py",
+        ]
 
         assert sorted(created) == sorted(expected)
 
