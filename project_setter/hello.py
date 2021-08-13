@@ -1,11 +1,11 @@
 """Main Script
 
-Este es el script principal en el paquete, pues manda a llamar a los demas modulos, a traves de comandos en el shell.
+This is the main script in the package. It calls the other modules throught shell commands.
 
-Este script contiene las siguientes funciones:
-  * cli - Esta función declara un grupo de comandos click.
-  * mkweb - Esta función representa un comando del shell para crear un proyecto WEB.
-  * mkpy - Esta función representa un comando del shell para crear un proyecto PYTHON.
+This script has the following functions:
+  * cli() - This funcion declares a group of commands.
+  * mkweb() - This function represents a shell command to create a WEB project.
+  * mkpy() - This function represents a shell command to create a PYTHON project.
 """
 
 
@@ -62,18 +62,18 @@ def mkpy(project_name, mode, pkg):
 
 
 def _make_project(project_name, project_type, mode, pkg=False):
-    """Verifica el modo de escogido para el proyecto, obtiene su root path y y llama a los metodos encargados de crear el tipo de proyecto
+    """Verifies the choosed mode, obtains project type and call the classes corresponding to each project type.
     
     Parameters
     __________
     project_name : String object
-        Contiene el nombre del proyecto escrito en el shell.
+        Contains the project's name typed in the shell.
     project_name : Enum.Project object
-        Contiene el tipo de proyecto que se desea crear.
+        Contains the project's type.
     mode : String object
-        Contiene el modo escogido en el shell por los flags.
+        Contains the choosed mode in the shell.
     pkg : Boolean object
-        Booleano para indicar si el pkg hace parte de los parametros (usado para projectos de tipo Project.PYTHON).
+        Boolean that indicates if pkg is part of the function's parameters (used in Project.PYTHON projects).
     """
 
     if mode == 'CURRENT':
@@ -97,6 +97,12 @@ def _make_project(project_name, project_type, mode, pkg=False):
 
 
 def _show_message(existed, project_path):
+    """Shows the message after all the process in ready
+
+    This function also calls the cli_commands' functions for create a git repo and copy the dir path to the clipboard.
+
+    """
+
     if not existed:
         click.echo(f'Project created succesfull in {project_path}')
         cli_commands.start_git(project_path)
