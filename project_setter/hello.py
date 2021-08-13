@@ -1,3 +1,14 @@
+"""Main Script
+
+Este es el script principal en el paquete, pues manda a llamar a los demas modulos, a traves de comandos en el shell.
+
+Este script contiene las siguientes funciones:
+  * cli - Esta función declara un grupo de comandos click.
+  * mkweb - Esta función representa un comando del shell para crear un proyecto WEB.
+  * mkpy - Esta función representa un comando del shell para crear un proyecto PYTHON.
+"""
+
+
 import click
 from . import folders
 from . import cli_commands
@@ -51,6 +62,19 @@ def mkpy(project_name, mode, pkg):
 
 
 def _make_project(project_name, project_type, mode, pkg=False):
+    """Verifica el modo de escogido para el proyecto, obtiene su root path y y llama a los metodos encargados de crear el tipo de proyecto
+    
+    Parameters
+    __________
+    project_name : String object
+        Contiene el nombre del proyecto escrito en el shell.
+    project_name : Enum.Project object
+        Contiene el tipo de proyecto que se desea crear.
+    mode : String object
+        Contiene el modo escogido en el shell por los flags.
+    pkg : Boolean object
+        Booleano para indicar si el pkg hace parte de los parametros (usado para projectos de tipo Project.PYTHON).
+    """
 
     if mode == 'CURRENT':
         MAIN_FOLDER = cli_commands.get_pwd_path()
