@@ -1,21 +1,12 @@
 import logging
-from project_setter.data import Project
-
-import pytest
 
 from ..context import folders
+from .temporals import tmp_folder
 
 LOGGER = logging.getLogger(__name__)
 
 
 class TestFolders:
-    @pytest.fixture(scope="class")
-    def tmp_folder(self, tmp_path_factory):
-        print(type(tmp_path_factory))
-        d = tmp_path_factory.mktemp('TestDir')
-
-        return d
-
     def _get_main_files(self, folder):
         created_files = folder.iterdir()
         created_files = [file.name for file in created_files]
@@ -44,6 +35,24 @@ class TestFolders:
         created = folders.Project('NewProject', str(tmp_folder))
 
         assert created.BASE_DIR == tmp_folder
+
+    def test_project_already_created(self, tmp_folder):
+        project_name = "NewWeb"
+        web_project = folders.WebProject(project_name, str(tmp_folder))
+
+        successful = web_project.create_project() # First time
+        successful = web_project.create_project() # Second time
+
+        assert successful == False
+
+    def test_project_already_created(self, tmp_folder):
+        project_name = "NewPython"
+        py_project = folders.PyProject(project_name, str(tmp_folder))
+
+        successful = py_project.create_project(pkg=False) # First time
+        successful = py_project.create_project(pkg=False) # Second time
+
+        assert successful == False
 
     def test_web_project_creation(self, tmp_folder):
         project_name = "WebTest1"
@@ -111,16 +120,6 @@ class TestFolders:
         ]
 
         assert sorted(created) == sorted(expected)
-
-    
-    def test_project_already_created(self, tmp_folder):
-        project_name = "PythonTest4"
-        py_project = folders.PyProject(project_name, str(tmp_folder))
-
-        successful = py_project.create_project(pkg=True) # First time
-        successful = py_project.create_project(pkg=True) # Second time
-
-        assert successful == False
 
 
 
