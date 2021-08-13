@@ -8,7 +8,7 @@ class Project:
     def __init__(self, project_name, root):
         assert type(project_name) == str, "Project name not a String"
         assert " " not in project_name, "Project name must not have spaces"
-        assert type(root) == str, "Root varaible not a String"
+        assert type(root) == str, "Root argument not a String"
 
 
         self.BASE_DIR = Path(root)
@@ -40,18 +40,21 @@ class Project:
                     self._create_subfolders(new_parent, subfolders[folder])
 
     def create_project(self):
+        existed = False
         try:
             self.project_path.mkdir()
-        except FileExistsError as e:
-            return False
 
-        for folder in self.FOLDERS:
-            if folder == 'files':
-                self._create_files(self.project_path, self.FOLDERS[folder])
-            elif folder == 'subfolders':
-                self._create_subfolders(self.project_path, self.FOLDERS[folder])
+            for folder in self.FOLDERS:
+                if folder == 'files':
+                    self._create_files(self.project_path, self.FOLDERS[folder])
+                elif folder == 'subfolders':
+                    self._create_subfolders(self.project_path, self.FOLDERS[folder])
+        except FileExistsError:
+            existed = True
 
-        return True
+        assert type(existed) == bool, "Function not returning not a boolean"
+
+        return existed
 
 
 class WebProject(Project):
@@ -67,6 +70,8 @@ class PyProject(Project):
         self.FOLDERS = data.get_project_structure(project_type.PYTHON)
 
     def create_project(self, pkg):
+        assert type(pkg) == bool, "pkg argument has to be boolean"
+
         if pkg:
             pkg_folder = self.project_name.lower()
             self.FOLDERS['subfolders'][pkg_folder] = [

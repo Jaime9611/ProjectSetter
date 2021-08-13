@@ -70,12 +70,12 @@ def mkpy(project_name, mode, pkg):
 
     pyproject = folders.PyProject(project_name, MAIN_FOLDER)
 
-    successful = pyproject.create_project(pkg)
-    if successful:
+    existed = pyproject.create_project(pkg)
+    if not existed:
         click.echo(f'Project created succesfull in {pyproject.project_path}')
         cli_commands.start_git(pyproject.project_path)
         cli_commands.show_dir_path(pyproject.project_path)
         # cli_commands.start_vscode(pyproject.project_path)
         click.echo('Project Path copied to clipboard...')
     else:
-        click.echo('Project Already Created.')
+        click.echo('Project Already Exists.')
