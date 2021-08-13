@@ -3,7 +3,7 @@ from project_setter.data import Project
 
 import pytest
 
-from .context import folders
+from ..context import folders
 
 LOGGER = logging.getLogger(__name__)
 
@@ -41,14 +41,14 @@ class TestFolders:
         tmp_folder.exists()
 
     def test_project_creation(self, tmp_folder):
-        created = folders.Project('NewProject', tmp_folder)
+        created = folders.Project('NewProject', str(tmp_folder))
 
         assert created.BASE_DIR == tmp_folder
 
     def test_web_project_creation(self, tmp_folder):
         project_name = "WebTest1"
 
-        web_project = folders.WebProject(project_name, tmp_folder)
+        web_project = folders.WebProject(project_name, str(tmp_folder))
         web_project.create_project()
 
         created_files = self._get_main_files(tmp_folder)
@@ -57,7 +57,7 @@ class TestFolders:
 
     def test_web_project_main_structure_correct(self, tmp_folder):
         project_name = "WebTest2"
-        web_project = folders.WebProject(project_name, tmp_folder)
+        web_project = folders.WebProject(project_name, str(tmp_folder))
         web_project.create_project()
 
         folder = tmp_folder / project_name
@@ -69,7 +69,7 @@ class TestFolders:
 
     def test_web_project_files_correct(self, tmp_folder):
         project_name = "WebTest3"
-        web_project = folders.WebProject(project_name, tmp_folder)
+        web_project = folders.WebProject(project_name, str(tmp_folder))
         web_project.create_project()
 
         folder = tmp_folder / project_name
@@ -81,7 +81,7 @@ class TestFolders:
 
     def test_python_simple_project_correct(self, tmp_folder):
         project_name = "PythonTest1"
-        py_project = folders.PyProject(project_name, tmp_folder)
+        py_project = folders.PyProject(project_name, str(tmp_folder))
         py_project.create_project(pkg=False)
 
         folder = tmp_folder / project_name
@@ -96,7 +96,7 @@ class TestFolders:
 
     def test_python_pkg_project_correct(self, tmp_folder):
         project_name = "PythonTest3"
-        py_project = folders.PyProject(project_name, tmp_folder)
+        py_project = folders.PyProject(project_name, str(tmp_folder))
         py_project.create_project(pkg=True)
 
         folder = tmp_folder / project_name
@@ -115,7 +115,7 @@ class TestFolders:
     
     def test_project_already_created(self, tmp_folder):
         project_name = "PythonTest4"
-        py_project = folders.PyProject(project_name, tmp_folder)
+        py_project = folders.PyProject(project_name, str(tmp_folder))
 
         successful = py_project.create_project(pkg=True) # First time
         successful = py_project.create_project(pkg=True) # Second time

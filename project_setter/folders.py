@@ -6,6 +6,11 @@ from .data import Project as project_type
 
 class Project:
     def __init__(self, project_name, root):
+        assert type(project_name) == str, "Project name not a String"
+        assert " " not in project_name, "Project name must not have spaces"
+        assert type(root) == str, "Root varaible not a String"
+
+
         self.BASE_DIR = Path(root)
         self._check_base()
         self.project_path = self.BASE_DIR / project_name
