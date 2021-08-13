@@ -16,6 +16,27 @@ class TestFolders:
 
         return d
 
+    def _get_main_files(self, folder):
+        created_files = folder.iterdir()
+        created_files = [file.name for file in created_files]
+        LOGGER.debug(created_files)
+
+        return created_files
+
+    def _get_all_files(self, folder):
+        created_files = []
+        for item in folder.iterdir():
+            if item.is_dir():
+                child_list = [
+                    f'{f.parent.name}/{f.name}' for f in item.iterdir()
+                    ]
+                created_files += child_list
+            else:
+                created_files.append(item.name)
+        LOGGER.debug(created_files)
+
+        return created_files
+
     def test_tmp_dir_exists(self, tmp_folder):
         tmp_folder.exists()
 
@@ -30,20 +51,17 @@ class TestFolders:
         web_project = folders.WebProject(project_name, tmp_folder)
         web_project.create_project()
 
-        created_dirs = tmp_folder.iterdir()
-        created_dirs = [file.name for file in created_dirs]
-        LOGGER.debug(created_dirs)
+        created_files = self._get_main_files(tmp_folder)
 
-        assert project_name in created_dirs
+        assert project_name in created_files
 
     def test_web_project_main_structure_correct(self, tmp_folder):
         project_name = "WebTest2"
         web_project = folders.WebProject(project_name, tmp_folder)
         web_project.create_project()
 
-        created = (tmp_folder / project_name).iterdir()
-        created = [file.name for file in created]
-        LOGGER.debug(created)
+        folder = tmp_folder / project_name
+        created = self._get_main_files(folder)
 
         expected = ['.gitignore', 'index.html', 'css', 'js', 'assets']
 
@@ -54,16 +72,8 @@ class TestFolders:
         web_project = folders.WebProject(project_name, tmp_folder)
         web_project.create_project()
 
-        created = []
-        for item in (tmp_folder / project_name).iterdir():
-            if item.is_dir():
-                child_list = [
-                    f'{f.parent.name}/{f.name}' for f in item.iterdir()
-                    ]
-                created += child_list
-            else:
-                created.append(item.name)
-        LOGGER.debug(created)
+        folder = tmp_folder / project_name
+        created = self._get_all_files(folder)
 
         expected = ['.gitignore', 'assets/icons', 'assets/images', 'index.html', 'js/main.js', 'css/style.css']
 
@@ -74,9 +84,8 @@ class TestFolders:
         py_project = folders.PyProject(project_name, tmp_folder)
         py_project.create_project(pkg=False)
 
-        created = (tmp_folder / project_name).iterdir()
-        created = [file.name for file in created]
-        LOGGER.debug(created)
+        folder = tmp_folder / project_name
+        created = self._get_main_files(folder)
 
         expected = [
             "MANIFEST.in", "pyproject.toml", "setup.cfg",
@@ -90,16 +99,8 @@ class TestFolders:
         py_project = folders.PyProject(project_name, tmp_folder)
         py_project.create_project(pkg=True)
 
-        created = []
-        for item in (tmp_folder / project_name).iterdir():
-            if item.is_dir():
-                child_list = [
-                    f'{f.parent.name}/{f.name}' for f in item.iterdir()
-                    ]
-                created += child_list
-            else:
-                created.append(item.name)
-        LOGGER.debug(created)
+        folder = tmp_folder / project_name
+        created = self._get_all_files(folder)
 
         expected = [
             "MANIFEST.in", "pyproject.toml", "setup.cfg",
