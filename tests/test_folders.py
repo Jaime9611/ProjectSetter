@@ -112,3 +112,15 @@ class TestFolders:
 
         assert sorted(created) == sorted(expected)
 
+    
+    def test_project_already_created(self, tmp_folder):
+        project_name = "PythonTest4"
+        py_project = folders.PyProject(project_name, tmp_folder)
+
+        successful = py_project.create_project(pkg=True) # First time
+        successful = py_project.create_project(pkg=True) # Second time
+
+        assert successful == False
+
+
+

@@ -39,13 +39,16 @@ def mkweb(project_name, mode):
 
     webproject = folders.WebProject(project_name, MAIN_FOLDER)
 
-    webproject.create_project()
-    click.echo(f'Project created succesfull in {webproject.project_path}')
-    cli_commands.start_git(webproject.project_path)
-    cli_commands.show_dir_path(webproject.project_path)
-    # cli_commands.start_vscode(webproject.project_path)
+    successful = webproject.create_project()
+    if successful:
+        click.echo(f'Project created succesfull in {webproject.project_path}')
+        cli_commands.start_git(webproject.project_path)
+        cli_commands.show_dir_path(webproject.project_path)
+        # cli_commands.start_vscode(webproject.project_path)
+        click.echo('Project Path copied to clipboard...')
+    else:
+        click.echo('Project Already Exists.')
 
-    click.echo('Project Path copied to clipboard...')
 
 
 @cli.command()
@@ -67,10 +70,12 @@ def mkpy(project_name, mode, pkg):
 
     pyproject = folders.PyProject(project_name, MAIN_FOLDER)
 
-    pyproject.create_project(pkg)
-    click.echo(f'Project created succesfull in {pyproject.project_path}')
-    cli_commands.start_git(pyproject.project_path)
-    cli_commands.show_dir_path(pyproject.project_path)
-    # cli_commands.start_vscode(pyproject.project_path)
-
-    click.echo('Project Path copied to clipboard...')
+    successful = pyproject.create_project(pkg)
+    if successful:
+        click.echo(f'Project created succesfull in {pyproject.project_path}')
+        cli_commands.start_git(pyproject.project_path)
+        cli_commands.show_dir_path(pyproject.project_path)
+        # cli_commands.start_vscode(pyproject.project_path)
+        click.echo('Project Path copied to clipboard...')
+    else:
+        click.echo('Project Already Created.')

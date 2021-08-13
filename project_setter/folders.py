@@ -38,14 +38,15 @@ class Project:
         try:
             self.project_path.mkdir()
         except FileExistsError as e:
-            print('Este folder ya existe.')
-            return e
+            return False
 
         for folder in self.FOLDERS:
             if folder == 'files':
                 self._create_files(self.project_path, self.FOLDERS[folder])
             elif folder == 'subfolders':
                 self._create_subfolders(self.project_path, self.FOLDERS[folder])
+
+        return True
 
 
 class WebProject(Project):
