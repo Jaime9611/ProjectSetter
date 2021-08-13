@@ -2,7 +2,7 @@ import click
 from . import folders
 from . import cli_commands
 from . import data
-from .data import Project as project_type
+from .data import Project as project_enums
 
 
 HELP_P = "Create project in 'PROJECTS' directory."
@@ -30,26 +30,7 @@ def cli():
 def mkweb(project_name, mode):
     """Command to create a Web Project."""
 
-    if mode == 'CURRENT':
-        MAIN_FOLDER = cli_commands.get_pwd_path()
-    else:
-        MAIN_FOLDER = data.get_base_path(project_type.WEB)
-
-        if mode != 'MAIN':
-            MAIN_FOLDER += f'{mode}/'
-
-    webproject = folders.WebProject(project_name, MAIN_FOLDER)
-
-    successful = webproject.create_project()
-    if successful:
-        click.echo(f'Project created succesfull in {webproject.project_path}')
-        cli_commands.start_git(webproject.project_path)
-        cli_commands.show_dir_path(webproject.project_path)
-        # cli_commands.start_vscode(webproject.project_path)
-        click.echo('Project Path copied to clipboard...')
-    else:
-        click.echo('Project Already Exists.')
-
+    _make_project(project_name, project_enums.WEB, mode)
 
 
 @cli.command()
@@ -65,23 +46,38 @@ def mkweb(project_name, mode):
 @click.argument('project_name')
 def mkpy(project_name, mode, pkg):
     """Command to create a Python Project."""
+    
+    _make_project(project_name, project_enums.PYTHON, mode, pkg)
+
+
+def _make_project(project_name, project_type, mode, pkg=False):
 
     if mode == 'CURRENT':
         MAIN_FOLDER = cli_commands.get_pwd_path()
     else:
-        MAIN_FOLDER = data.get_base_path(project_type.PYTHON)
+        MAIN_FOLDER = data.get_base_path(project_type)
 
         if mode != 'MAIN':
             MAIN_FOLDER += f'{mode}/'
 
-    pyproject = folders.PyProject(project_name, MAIN_FOLDER)
 
-    existed = pyproject.create_project(pkg)
+    if project_type == project_enums.WEB:
+        project = folders.WebProject(project_name, MAIN_FOLDER)
+        existed = project.create_project()
+    elif project_type == project_enums.PYTHON:
+        project = folders.PyProject(project_name, MAIN_FOLDER)
+        existed = project.create_project(pkg)
+
+    _show_message(existed, project.project_path)    
+
+
+
+def _show_message(existed, project_path):
     if not existed:
-        click.echo(f'Project created succesfull in {pyproject.project_path}')
-        cli_commands.start_git(pyproject.project_path)
-        cli_commands.show_dir_path(pyproject.project_path)
-        # cli_commands.start_vscode(pyproject.project_path)
+        click.echo(f'Project created succesfull in {project_path}')
+        cli_commands.start_git(project_path)
+        cli_commands.show_dir_path(project_path)
+        # cli_commands.start_vscode(project.project_path)
         click.echo('Project Path copied to clipboard...')
     else:
         click.echo('Project Already Exists.')
