@@ -29,6 +29,7 @@ def cli():
 @click.argument('project_name')
 def mkweb(project_name, mode):
     """Command to create a Web Project."""
+
     if mode == 'CURRENT':
         MAIN_FOLDER = cli_commands.get_pwd_path()
     else:
@@ -57,16 +58,21 @@ def mkweb(project_name, mode):
 @click.option('-t', '--test', 'mode', flag_value='PRACTICE',
     help=HELP_T)
 @click.option('-o', '--other', 'mode', flag_value='MAIN', 
-    default=True, help=HELP_R)
-@click.option('-pkg', '--pkg', is_flag=True, default=False)
+    help=HELP_R)
+@click.option('-c', '--current', 'mode', flag_value='CURRENT', 
+    default=True, help=HELP_C)
+@click.option('-pkg', '--package','pkg', is_flag=True, default=False)
 @click.argument('project_name')
 def mkpy(project_name, mode, pkg):
     """Command to create a Python Project."""
 
-    MAIN_FOLDER = data.get_base_path(project_type.PYTHON)
+    if mode == 'CURRENT':
+        MAIN_FOLDER = cli_commands.get_pwd_path()
+    else:
+        MAIN_FOLDER = data.get_base_path(project_type.PYTHON)
 
-    if mode != 'MAIN':
-        MAIN_FOLDER += f'{mode}/'
+        if mode != 'MAIN':
+            MAIN_FOLDER += f'{mode}/'
 
     pyproject = folders.PyProject(project_name, MAIN_FOLDER)
 

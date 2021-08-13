@@ -20,12 +20,13 @@ def get_main_files(folder):
 def get_all_files(folder):
     created_files = []
     for item in folder.iterdir():
-        if item.is_dir():
+        if item.is_dir() and ".git" not in item.name:
             child_list = [
                 f'{f.parent.name}/{f.name}' for f in item.iterdir()
                 ]
             created_files += child_list
         else:
             created_files.append(item.name)
+
 
     return created_files
