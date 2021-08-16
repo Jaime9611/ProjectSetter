@@ -4,6 +4,8 @@ import logging
 
 LOGGER = logging.getLogger(__name__)
 
+logging.disable(level=logging.CRITICAL)
+
 @pytest.fixture(scope="function")
 def tmp_folder(tmp_path_factory):
     d = tmp_path_factory.mktemp('TestDir')

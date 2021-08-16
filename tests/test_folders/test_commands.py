@@ -10,6 +10,7 @@ from .temporals import get_main_files
 
 
 LOGGER = logging.getLogger(__name__)
+logging.disable(level=logging.CRITICAL)
 
 
 class TestCommands:
